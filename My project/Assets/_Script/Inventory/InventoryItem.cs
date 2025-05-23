@@ -20,8 +20,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     void Start()
     {
-        
-
         if (canvas == null)
         {
             canvas = GetComponentInParent<Canvas>();
