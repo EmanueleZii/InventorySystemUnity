@@ -12,8 +12,9 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private CanvasGroup canvasGroup;
     public Item itemData; // Riferimento al ScriptableObject
 
-    public int stackCount = 1;
     public int maxStack = 60;
+    public int stackCount = 60;
+    
     // UI
     public Text stackText;
 
