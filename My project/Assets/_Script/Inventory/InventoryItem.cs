@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
@@ -11,8 +12,14 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private CanvasGroup canvasGroup;
     public Item itemData; // Riferimento al ScriptableObject
 
+    public int stackCount = 1;
+    public int maxStack = 60;
+    // UI
+    public Text stackText;
+
     void Start()
     {
+        
 
         if (canvas == null)
         {
@@ -30,6 +37,30 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (canvasGroup == null)
         {
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
+        }
+    }
+
+    void UpdateUI()
+    {
+        stackText.text = stackCount > 1 ? stackCount.ToString() : "";
+    }
+
+    public void IncreaseStack(int amount)
+    {
+        stackCount = Mathf.Min(stackCount + amount, maxStack);
+        UpdateUI();
+    }
+
+    public void DecreaseStack(int amount)
+    {
+        stackCount -= amount;
+        if (stackCount <= 0)
+        {
+            Destroy(gameObject); // Rimuove l'oggetto dalla scena
+        }
+        else
+        {
+            UpdateUI();
         }
     }
 
@@ -70,6 +101,15 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 itemData.Use();
             else
                 Debug.LogWarning("itemData è NULL");
+        }
+
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            if (itemData != null)
+            {
+                itemData.Use();
+                DecreaseStack(1);
+            }
         }
     }
 }
