@@ -105,7 +105,8 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (!isValidParent)
         {
             // Oggetto rilasciato fuori dall'inventario
-            Destroy(gameObject);
+            transform.SetParent(originalSlot);
+            transform.localPosition = Vector3.zero;
         }
         else
         {
