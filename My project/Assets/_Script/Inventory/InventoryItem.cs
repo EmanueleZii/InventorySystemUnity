@@ -13,6 +13,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Item itemData; // Riferimento al ScriptableObject
 
     HealthPotion healthPotion;
+    Food food1;
      public int maxStack = 60; // il massimo numero stock di item raccoglibili 
     public int stackCount = 60; // lo stock attuale che si ha nel inventario
 
@@ -25,6 +26,8 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (itemData is HealthPotion)
             healthPotion = (HealthPotion)itemData;
+         if (itemData is Food)
+            food1 = (Food)itemData;
         //Controllo dei vari oggetti e instanze se sono null...
         if (player == null)
             player = FindAnyObjectByType<Player>();
@@ -60,17 +63,25 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             stackCount = Mathf.Min(stackCount + amount, maxStack);
             UpdateUI();
         }
+        else if (itemData is Food food)
+        {
+            stackCount = Mathf.Min(stackCount + amount, maxStack);
+            UpdateUI();
+        }
         else
         {
             Debug.LogWarning("Item non ha maxStack definito!");
         }
     }
 
-    public void DecreaseStack(int amount, PointerEventData eventData) { // decrementa a quantita di un item 
-        if (healthPotion == null) return;
+    public void DecreaseStack(int amount, PointerEventData eventData)
+    {
+        // decrementa a quantita di un item 
         stackCount -= amount;
-        if (stackCount <= 0) {
-            if (itemData is HealthPotion) {
+        if (stackCount <= 0)
+        {
+            if (itemData is HealthPotion || itemData is Food)
+            {
                 Destroy(gameObject); // Rimuove l'oggetto dalla scena
             }
         }
@@ -128,9 +139,11 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right) {
-            if (itemData != null && itemData is HealthPotion) {
-                itemData.Use(player);
-                DecreaseStack(1, eventData);
+            if (itemData != null ) {
+                if (itemData is HealthPotion || itemData is Food) {
+                    itemData.Use(player);
+                    DecreaseStack(1, eventData);
+                }
             }
         }
     }

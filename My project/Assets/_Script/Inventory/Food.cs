@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 [CreateAssetMenu(fileName = "New Food", menuName = "Inventory/Food")]
 public class Food : Item
 {
@@ -13,6 +14,6 @@ public class Food : Item
     }
     public override void Use(Player player)
     {
-        Debug.Log($"Hai Equippagiato{nomeFood} ti sfamato {fame}");
+        Debug.Log($"Hai Mangiato {nomeFood} ti sfamato +{fame}");
     }
 }

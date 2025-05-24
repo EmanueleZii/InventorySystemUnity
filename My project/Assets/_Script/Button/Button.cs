@@ -14,11 +14,11 @@ public class Button : MonoBehaviour
         if (player == null)
         player = FindAnyObjectByType<Player>();
 
-    if (healthPotion == null)
-        healthPotion = FindAnyObjectByType<HealthPotion>();
+        if (healthPotion == null)
+            healthPotion = FindAnyObjectByType<HealthPotion>();
 
-    if (inventoryItem == null)
-        inventoryItem = FindAnyObjectByType<InventoryItem>();
+       if (inventoryItem == null)
+          inventoryItem = FindObjectOfType<InventoryItem>();
     }
 
     public void prendiDanno()
@@ -33,18 +33,30 @@ public class Button : MonoBehaviour
             Debug.LogWarning("Player non assegnato!");
         }
     }
-    public void prendiPozione()
-    {
-         if (player == null) {
-        Debug.LogWarning("Player non assegnato!");
-        return;
-    }
+    public void prendiPozione() {
+        
+       if (player == null) {
+            Debug.LogWarning("Player non assegnato!");
+            return;
+        }
 
-    if (inventoryItem == null) {
-        Debug.LogWarning("InventoryItem non assegnato!");
-        return;
-    }
+        InventoryItem[] items = FindObjectsOfType<InventoryItem>();
+        InventoryItem potionItem = null;
 
-       inventoryItem.IncreaseStack(1);
+        foreach(var item in items) {
+            if (item.itemData is HealthPotion) {
+                potionItem = item;
+                break;
+            }
+        }
+
+        if (potionItem != null)
+        {
+            Debug.Log($"Aumento stack per pozione: {potionItem.itemData.name}");
+            potionItem.IncreaseStack(1);
+        }
+        else {
+            Debug.LogWarning("Nessuna HealthPotion trovata nell'inventario!");
+        }
     }
 }
