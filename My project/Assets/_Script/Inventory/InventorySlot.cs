@@ -8,10 +8,17 @@ public class InventorySlot :  MonoBehaviour, IDropHandler
 {
     
     public bool IsOccupied => transform.childCount > 0;
+    public InventoryItem currentItem;  // riferimento all'item nello slot
 
+    public bool IsEmpty()
+    {
+        return currentItem == null;
+    }
+    
     public void OnDrop(PointerEventData eventData)
     {
-        if (eventData.pointerDrag != null) {
+        if (eventData.pointerDrag != null)
+        {
             // Opzionale: rifiuta se slot occupato
             if (IsOccupied) return;
 
