@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     private bool inventory = true;
     [SerializeField]
     private GameObject zaino;
+    [SerializeField]
+    private GameObject Equip;
 
     public Text health_text;
     public float health = 100f;
@@ -39,20 +41,23 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey("i") && inventory)
         {
-             inventory = !inventory;
-          zaino.SetActive(inventory);
+            inventory = !inventory;
+            zaino.SetActive(inventory);
+            Equip.SetActive(inventory);
         }
         else if (Input.GetKey("i") && inventory == false)
         {
             inventory = !inventory;
             zaino.SetActive(inventory);
+            Equip.SetActive(inventory);
         }
     }
 
     public void OnClick()
-    { 
-          inventory = !inventory;
-          zaino.SetActive(inventory);
+    {
+        inventory = !inventory;
+        zaino.SetActive(inventory);
+        Equip.SetActive(inventory);
     }
 
 }
