@@ -25,21 +25,17 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (player == null)
            player = FindAnyObjectByType<Player>();
 
-        if (canvas == null)
-        {
+        if (canvas == null) {
             canvas = GetComponentInParent<Canvas>();
             canvas = FindObjectOfType<Canvas>();
         }
 
-        if (canvas == null)
-        {
-            Debug.LogError("No Canvas found in the scene. InventoryItem requires a Canvas to function.");
+        if (canvas == null) {
             enabled = false;
             return;
         }
         canvasGroup = GetComponent<CanvasGroup>();
-        if (canvasGroup == null)
-        {
+        if (canvasGroup == null) {
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
     }
@@ -59,15 +55,14 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         UpdateUI(); // aggiorna la UI
     }
 
-    public void DecreaseStack(int amount)// decrementa a quantita di un item
+    public void DecreaseStack(int amount,PointerEventData eventData)// decrementa a quantita di un item
     {
         stackCount -= amount;
-        if (stackCount <= 0)
-        { 
-            if (itemData is HealthPotion)
-                 Destroy(gameObject); // Rimuove l'oggetto dalla scena
-        }
-        else
+        if (stackCount <= 0) {
+            if (itemData is HealthPotion) {
+                Destroy(gameObject); // Rimuove l'oggetto dalla scena
+            }
+        }else
         {
             UpdateUI();
         }
@@ -114,15 +109,11 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     //Per rilevare il click del item...
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left) {
+        if (eventData.button == PointerEventData.InputButton.Right) {
             if (itemData != null)
+            {
                 itemData.Use(player);
-        }
-
-        if (eventData.button == PointerEventData.InputButton.Left){
-            if (itemData != null) {
-                itemData.Use(player);
-                DecreaseStack(1);
+                DecreaseStack(1, eventData);
             }
         }
     }
