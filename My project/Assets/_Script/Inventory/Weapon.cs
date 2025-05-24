@@ -15,6 +15,6 @@ public class Weapon : Item
     }
     public override void Use(Player player)
     {
-        Debug.Log($"Hai usato{nomeArma} con danno {damage}");
+        Debug.Log($"Hai Equipagiato{nomeArma} con danno {damage}");
     }
 }

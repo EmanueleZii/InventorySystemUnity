@@ -59,8 +59,9 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         stackCount -= amount;
         if (stackCount <= 0)
-        {
-            Destroy(gameObject); // Rimuove l'oggetto dalla scena
+        { 
+            if (itemData is HealthPotion)
+                 Destroy(gameObject); // Rimuove l'oggetto dalla scena
         }
         else
         {
