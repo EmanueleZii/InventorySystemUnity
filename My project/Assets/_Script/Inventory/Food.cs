@@ -14,6 +14,7 @@ public class Food : Item
     }
     public override void Use(Player player)
     {
+        player.fame += fame;
         Debug.Log($"Hai Mangiato {nomeFood} ti sfamato +{fame}");
     }
 }

@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 public class Player : MonoBehaviour
 {
     public Slider HealthBar;
+    public Slider Barrafame;
     private bool inventory = true;
     [SerializeField]
     private GameObject zaino;
@@ -15,7 +16,9 @@ public class Player : MonoBehaviour
     private GameObject Equip;
 
     public Text health_text;
+    public Text fame_text;
     public float health = 100f;
+    public float fame = 90f;
 
     void Update()
     {
@@ -23,7 +26,12 @@ public class Player : MonoBehaviour
         HealthBar.maxValue = 100;
         HealthBar.value = health;
         health_text.text = health.ToString();
+        fame_text.text = fame.ToString();
+        Barrafame.minValue = 0;
+        Barrafame.maxValue = 100;
+        Barrafame.value = fame;
         LogicHealth();
+        Logicfame();
         ZainoLogic();
     }
     private void LogicHealth()
@@ -32,6 +40,13 @@ public class Player : MonoBehaviour
             health = 0;
         if (health >= 100)
             health = 100;
+    }
+    private void Logicfame()
+    {
+        if (fame <= 0)
+            fame = 0;
+        if (fame >= 100)
+            fame = 100;
     }
 
     //zaino logic 
