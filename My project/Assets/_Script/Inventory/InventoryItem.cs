@@ -6,19 +6,19 @@ using UnityEngine;
 
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
-    private Transform originalParent;
+    private Transform originalSlot; // per salvare lo slot originale del item
     [SerializeField]
-    private Canvas canvas;
+    private Canvas canvas; 
     private CanvasGroup canvasGroup;
     public Item itemData; // Riferimento al ScriptableObject
 
-    public int maxStack = 60;
-    public int stackCount = 60;
+    public int maxStack = 60; // il massimo numero stock di item raccoglibili 
+    public int stackCount = 60; // lo stock attuale che si ha nel inventario
     
     // UI
-    public Text stackText;
+    public Text stackText; 
 
-    Player player;
+    Player player; //instanza del player
 
     void Start()
     {
@@ -44,18 +44,22 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
     }
 
-    void UpdateUI()
+    void UpdateUI() // Aggiorna la UI
     {
-        stackText.text = stackCount > 1 ? stackCount.ToString() : "";
+        // verifica se  l item e superiore a un 1 contenuto nello slot se e zero non stampa nulla
+        if (stackCount > 1)
+            stackText.text = stackCount.ToString();
+        else
+            stackText.text = "";
     }
 
-    public void IncreaseStack(int amount)
+    public void IncreaseStack(int amount) // incrementa a quantita di un item
     {
         stackCount = Mathf.Min(stackCount + amount, maxStack);
-        UpdateUI();
+        UpdateUI(); // aggiorna la UI
     }
 
-    public void DecreaseStack(int amount)
+    public void DecreaseStack(int amount)// decrementa a quantita di un item
     {
         stackCount -= amount;
         if (stackCount <= 0)
@@ -71,7 +75,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        originalParent = transform.parent;
+        originalSlot = transform.parent;
         transform.SetParent(canvas.transform); // Per stare sopra gli altri
         canvasGroup.blocksRaycasts = false;
     }
@@ -85,8 +89,8 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         canvasGroup.blocksRaycasts = true;
 
-        // Se il parent NON è uno slot valido, ritorna al parent originale
-        if (transform.parent == canvas.transform || transform.parent.GetComponent<InventorySlot>() == null)
+        // Se lo slot non è uno slot, ritorna allo slot di prima
+       /* if (transform.parent == canvas.transform || transform.parent.GetComponent<InventorySlot>() == null)
         {
             transform.SetParent(originalParent);
             transform.localPosition = Vector3.zero;
@@ -95,23 +99,28 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             // Posiziona bene l'item nel nuovo slot
             transform.localPosition = Vector3.zero;
-        }
+        }*/
+        
+        bool isValidParent = transform.parent != canvas.transform && transform.parent.GetComponent<InventorySlot>() != null;
+
+        if (!isValidParent)
+            // Oggetto rilasciato fuori dall'inventario
+            Destroy(gameObject);
+        
+        else
+            transform.localPosition = Vector3.zero;
+        
     }
     //Per rilevare il click del item...
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Left) {
-            Debug.Log("Click sull'item: " + (itemData != null ? itemData.name : "NULL"));
             if (itemData != null)
                 itemData.Use(player);
-            else
-                Debug.LogWarning("itemData è NULL");
         }
 
-        if (eventData.button == PointerEventData.InputButton.Left)
-        {
-            if (itemData != null)
-            {
+        if (eventData.button == PointerEventData.InputButton.Left){
+            if (itemData != null) {
                 itemData.Use(player);
                 DecreaseStack(1);
             }
