@@ -85,25 +85,33 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         canvasGroup.blocksRaycasts = true;
 
         // Se lo slot non è uno slot, ritorna allo slot di prima
-       /* if (transform.parent == canvas.transform || transform.parent.GetComponent<InventorySlot>() == null)
+        /* if (transform.parent == canvas.transform || transform.parent.GetComponent<InventorySlot>() == null)
+         {
+             transform.SetParent(originalSlot);
+             transform.localPosition = Vector3.zero;
+         }
+         else
+         {
+             // Posiziona bene l'item nel nuovo slot
+             transform.localPosition = Vector3.zero;
+         }*/
+
+        //bool isValidParent = transform.parent != canvas.transform && transform.parent.GetComponent<InventorySlot>() ||transform.parent.GetComponent<InventorySlotEquip>() != null;
+        var parent = transform.parent;
+        bool isValidParent = parent != canvas.transform &&
+                    (parent.GetComponent<InventorySlot>() != null ||
+                     parent.GetComponent<InventorySlotEquip>() != null);
+
+        if (!isValidParent)
         {
-            transform.SetParent(originalParent);
-            transform.localPosition = Vector3.zero;
+            // Oggetto rilasciato fuori dall'inventario
+            Destroy(gameObject);
         }
         else
         {
             // Posiziona bene l'item nel nuovo slot
             transform.localPosition = Vector3.zero;
-        }*/
-        
-        bool isValidParent = transform.parent != canvas.transform && transform.parent.GetComponent<InventorySlot>() != null;
-
-        if (!isValidParent)
-            // Oggetto rilasciato fuori dall'inventario
-            Destroy(gameObject);
-        
-        else
-            transform.localPosition = Vector3.zero;
+        }
         
     }
     //Per rilevare il click del item...
