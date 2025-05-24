@@ -6,6 +6,8 @@ public class Button : MonoBehaviour
     public Player player; // da assegnare via Inspector
     public int damage = 10;
 
+    
+
     public void OnClick()
     {
         if (player != null)

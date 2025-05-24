@@ -8,6 +8,9 @@ using Unity.VisualScripting;
 public class Player : MonoBehaviour
 {
     public Slider HealthBar;
+    private bool inventory = true;
+    [SerializeField]
+    private GameObject zaino;
 
     public Text health_text;
     public float health = 100f;
@@ -19,6 +22,7 @@ public class Player : MonoBehaviour
         HealthBar.value = health;
         health_text.text = health.ToString();
         LogicHealth();
+        ZainoLogic();
     }
     private void LogicHealth()
     {
@@ -26,6 +30,29 @@ public class Player : MonoBehaviour
             health = 0;
         if (health >= 100)
             health = 100;
+    }
+
+    //zaino logic 
+
+    private void ZainoLogic()
+    {
+
+        if (Input.GetKey("i") && inventory)
+        {
+             inventory = !inventory;
+          zaino.SetActive(inventory);
+        }
+        else if (Input.GetKey("i") && inventory == false)
+        {
+            inventory = !inventory;
+            zaino.SetActive(inventory);
+        }
+    }
+
+    public void OnClick()
+    { 
+          inventory = !inventory;
+          zaino.SetActive(inventory);
     }
 
 }
