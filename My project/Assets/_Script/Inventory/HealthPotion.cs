@@ -8,6 +8,8 @@ public class HealthPotion : Item
     public int healAmount = 50;
     public Player player;
 
+   
+
     void Start()
     {
         if (player == null)
