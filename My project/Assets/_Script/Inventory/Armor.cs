@@ -7,7 +7,6 @@ public class Armor : Item
 {
     Player player;
     string nameArmor;
-
     private void Start()
     {
         if (player == null)
