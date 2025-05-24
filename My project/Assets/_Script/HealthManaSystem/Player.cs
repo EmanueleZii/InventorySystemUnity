@@ -7,27 +7,21 @@ public class Player : MonoBehaviour
 {
     public Slider HealthBar;
 
-    private float health = 100f;
-    public float Health
-    {
-        get
-        {
-            return health;
-        }
-        set
-        {
-            health = value;
-        }
-    }
+    public float health = 100f;
+    
     // Start is called before the first frame update
     void Start()
     {
-        HealthBar.minValue = 0;
-        HealthBar.maxValue = 100;
-        HealthBar.value = Health;
+        
+       
     }
 
-  
-    
+    void Update()
+    {
+          HealthBar.minValue = 0;
+         HealthBar.maxValue = 100;
+         HealthBar.value = health;
+    }
+
 
 }

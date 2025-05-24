@@ -18,8 +18,13 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     // UI
     public Text stackText;
 
+    Player player;
+
     void Start()
     {
+        if (player == null)
+           player = FindAnyObjectByType<Player>();
+
         if (canvas == null)
         {
             canvas = GetComponentInParent<Canvas>();
@@ -97,7 +102,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (eventData.button == PointerEventData.InputButton.Left) {
             Debug.Log("Click sull'item: " + (itemData != null ? itemData.name : "NULL"));
             if (itemData != null)
-                itemData.Use();
+                itemData.Use(player);
             else
                 Debug.LogWarning("itemData è NULL");
         }
@@ -106,7 +111,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             if (itemData != null)
             {
-                itemData.Use();
+                itemData.Use(player);
                 DecreaseStack(1);
             }
         }

@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class DamageButton : MonoBehaviour
+public class Button : MonoBehaviour
 {
     public Player player; // da assegnare via Inspector
     public int damage = 10;
@@ -9,7 +10,7 @@ public class DamageButton : MonoBehaviour
     {
         if (player != null)
         {
-            player.Health -= damage;
+            player.health -= damage;
             Debug.Log("Danno inflitto: " + damage);
         }
         else

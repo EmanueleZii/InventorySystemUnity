@@ -8,7 +8,12 @@ public class Weapon : Item
     public string nomeArma = "";
     public int damage = 20;
 
-    public override void Use()
+    Player player;
+    void Start() {
+      if (player == null)
+           player = FindAnyObjectByType<Player>();   
+    }
+    public override void Use(Player player)
     {
         Debug.Log($"Hai usato{nomeArma} con danno {damage}");
     }
