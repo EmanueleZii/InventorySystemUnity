@@ -8,7 +8,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 {
     private Transform originalSlot; // per salvare lo slot originale del item
     [SerializeField]
-    private Canvas canvas; 
+    private Canvas canvas;  
     private CanvasGroup canvasGroup;
     public Item itemData; // Riferimento al ScriptableObject
 
@@ -16,14 +16,15 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public int stackCount = 60; // lo stock attuale che si ha nel inventario
     
     // UI
-    public Text stackText; 
+    public Text stackText; //il testo dei stack dei vari items...
 
     Player player; //instanza del player
 
     void Start()
     {
+        //Controllo dei vari oggetti e instanze se sono null...
         if (player == null)
-           player = FindAnyObjectByType<Player>();
+            player = FindAnyObjectByType<Player>();
 
         if (canvas == null) {
             canvas = GetComponentInParent<Canvas>();
@@ -62,29 +63,25 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             if (itemData is HealthPotion) {
                 Destroy(gameObject); // Rimuove l'oggetto dalla scena
             }
-        }else
-        {
+        }else {
             UpdateUI();
         }
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
-    {
+    public void OnBeginDrag(PointerEventData eventData) {
         originalSlot = transform.parent;
         transform.SetParent(canvas.transform); // Per stare sopra gli altri
         canvasGroup.blocksRaycasts = false;
     }
 
-    public void OnDrag(PointerEventData eventData)
-    {
+    public void OnDrag(PointerEventData eventData) {
         transform.position = eventData.position;
     }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
+    public void OnEndDrag(PointerEventData eventData) {
         canvasGroup.blocksRaycasts = true;
 
-        // Se lo slot non è uno slot, ritorna allo slot di prima
+        // Se lo slot non è uno slot, ritorna allo slot di prima...
         /* if (transform.parent == canvas.transform || transform.parent.GetComponent<InventorySlot>() == null)
          {
              transform.SetParent(originalSlot);
@@ -96,31 +93,30 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
              transform.localPosition = Vector3.zero;
          }*/
 
+        //non funzionava...
         //bool isValidParent = transform.parent != canvas.transform && transform.parent.GetComponent<InventorySlot>() ||transform.parent.GetComponent<InventorySlotEquip>() != null;
         var parent = transform.parent;
+        //Questo si...
         bool isValidParent = parent != canvas.transform &&
                     (parent.GetComponent<InventorySlot>() != null ||
                      parent.GetComponent<InventorySlotEquip>() != null);
 
-        if (!isValidParent)
-        {
+        if (!isValidParent){
             // Oggetto rilasciato fuori dall'inventario
             transform.SetParent(originalSlot);
             transform.localPosition = Vector3.zero;
         }
-        else
-        {
+        else {
             // Posiziona bene l'item nel nuovo slot
             transform.localPosition = Vector3.zero;
         }
         
     }
-    //Per rilevare il click del item...
+    //Per rilevare il click sul item...
     public void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right) {
-            if (itemData != null)
-            {
+            if (itemData != null && itemData is HealthPotion) {
                 itemData.Use(player);
                 DecreaseStack(1, eventData);
             }
