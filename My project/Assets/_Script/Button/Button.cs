@@ -8,17 +8,28 @@ public class Button : MonoBehaviour
 
     public HealthPotion healthPotion;
     public InventoryItem inventoryItem;
+    public InventoryMenager inventoryManager;
+    public Item itemToAdd;
 
     void Start()
     {
         if (player == null)
-        player = FindAnyObjectByType<Player>();
+            player = FindAnyObjectByType<Player>();
 
         if (healthPotion == null)
             healthPotion = FindAnyObjectByType<HealthPotion>();
 
-       if (inventoryItem == null)
-          inventoryItem = FindObjectOfType<InventoryItem>();
+        if (inventoryItem == null)
+            inventoryItem = FindObjectOfType<InventoryItem>();
+
+    }
+
+    public void OnAddItemButtonClicked()
+    {
+        if (inventoryManager != null && itemToAdd != null)
+            inventoryManager.AddItem(itemToAdd);
+        else
+            Debug.LogWarning("InventoryManager o ItemToAdd non assegnato.");
     }
 
     public void prendiDanno()

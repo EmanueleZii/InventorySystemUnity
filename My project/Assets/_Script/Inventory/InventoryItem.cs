@@ -108,8 +108,8 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         transform.position = eventData.position;
     }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
+    public void OnEndDrag(PointerEventData eventData) {
+        
         canvasGroup.blocksRaycasts = true;
 
         // Se lo slot non è uno slot, ritorna allo slot di prima...
@@ -132,28 +132,22 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                     (parent.GetComponent<InventorySlot>() != null ||
                      parent.GetComponent<InventorySlotEquip>() != null);
 
-        if (!isValidParent)
-        {
+        if (!isValidParent) {
             // Oggetto rilasciato fuori dall'inventario
             transform.SetParent(originalSlot);
             transform.localPosition = Vector3.zero;
         }
-        else
-        {
+        else {
             // Posiziona bene l'item nel nuovo slot
             transform.localPosition = Vector3.zero;
         }
 
     }
     //Per rilevare il click sul item...
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            if (itemData != null)
-            {
-                if (itemData is HealthPotion || itemData is Food)
-                {
+    public void OnPointerClick(PointerEventData eventData) {
+        if (eventData.button == PointerEventData.InputButton.Right) {
+            if (itemData != null) {
+                if (itemData is HealthPotion || itemData is Food) {
                     itemData.Use(player);
                     DecreaseStack(1, eventData);
                 }
