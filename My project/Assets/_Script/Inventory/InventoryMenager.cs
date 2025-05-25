@@ -23,22 +23,21 @@ public class InventoryMenager : MonoBehaviour
     }
    public void AddItem(Item newItem)
     {
-        // Cerca item esistente
+        // Cerca un item 
         var existingItem = inventoryItems.Find(i => i.itemData == newItem);
 
-        if (existingItem != null)
-        {
+        if (existingItem != null){
             existingItem.IncreaseStack(1);
             return;
         }
-
-        // Crea nuovo item UI
+        
+        // Crea un item 
         var newItemGO = Instantiate(inventoryItemPrefab, inventoryContent);
         var itemComponent = newItemGO.GetComponent<InventoryItem>();
         itemComponent.itemData = newItem;
         itemComponent.stackCount = 1;
 
-        // Setta icona, se presente
+        // Setta icona, se ce
         var img = newItemGO.GetComponent<UnityEngine.UI.Image>();
         if (img != null && newItem.icon != null)
             img.sprite = newItem.icon;
