@@ -19,9 +19,3 @@
     <p>
         Questa implementazione è pensata come base solida e pulita su cui costruire funzionalità avanzate.
     </p>
-
-    <span>Package usati</span>
-    <ul>
-     <li>Fantasy Wooden GUI Free</li>
-     <li>RPG_inventory_icons</li>
-    </ul>
