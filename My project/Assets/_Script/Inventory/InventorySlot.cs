@@ -14,7 +14,17 @@ public class InventorySlot :  MonoBehaviour, IDropHandler
     { 
        return currentItem == null;
     }
-    
+
+    public void SetItem(InventoryItem item)
+    {
+        currentItem = item;
+        item.transform.SetParent(transform);
+        item.transform.localPosition = Vector3.zero;
+    }
+    public void ClearSlot()
+    {
+        currentItem = null;
+    }
     public void OnDrop(PointerEventData eventData)
     {
         

@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a84556cf7dd4c44b9685d55cfa12de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
+  canvas: {fileID: 612281046538372985, guid: 6622bb155d40d4d44ad61c71a075edce, type: 3}
   itemData: {fileID: 11400000, guid: 33511ef6aeae3c24c8e5c2e94a180f6c, type: 2}
   maxStack: 60
   stackCount: 1
