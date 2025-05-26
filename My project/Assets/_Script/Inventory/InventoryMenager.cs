@@ -20,7 +20,6 @@ public class InventoryMenager : MonoBehaviour {
         }
         return null;
     }
-    
     // Questo metodo viene richiamato dal Button UI
     public void ToggleInventory() {
         isInventoryOpen = !isInventoryOpen;

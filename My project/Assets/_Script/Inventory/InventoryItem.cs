@@ -54,22 +54,17 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             Debug.LogWarning("stackText non è assegnato!");
             return;
         }
-
+        // stampa il numero dei item a pato che il count e superiore a 1
        stackText.text = stackCount > 1 ? stackCount.ToString() : "";
     }
-// incrementa a quantita di un item
-    public void IncreaseStack(int amount)  {
 
-        /*if (itemData is HealthPotion potion) {
+    // incrementa a quantita di un item
+    public void IncreaseStack(int amount){
+
+        if (itemData is Food food || itemData is HealthPotion potion)
+        {
             stackCount = Mathf.Min(stackCount + amount, maxStack);
             UpdateUI();
-        }*/
-        if (itemData is Food food || itemData is HealthPotion potion ) {
-            stackCount = Mathf.Min(stackCount + amount, maxStack);
-            UpdateUI();
-        }
-        else {
-            Debug.LogWarning("Item non ha maxStack definito!");
         }
     }
 
@@ -88,8 +83,8 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     //mette sopra nella gerarchia l item che si sta trascinando con il mouse...
     public void OnBeginDrag(PointerEventData eventData) {
-        originalSlot = transform.parent;
-        transform.SetParent(canvas.transform); // Per stare sopra gli altri
+         originalSlot = transform.parent;
+        transform.SetParent(canvas.transform); // porta sopra il canvas per evitare problemi di raycast
         canvasGroup.blocksRaycasts = false;
     }
 
@@ -100,21 +95,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void OnEndDrag(PointerEventData eventData) {
         
         canvasGroup.blocksRaycasts = true;
-
-        // Se lo slot non è uno slot, ritorna allo slot di prima...
-        /* if (transform.parent == canvas.transform || transform.parent.GetComponent<InventorySlot>() == null)
-         {
-             transform.SetParent(originalSlot);
-             transform.localPosition = Vector3.zero;
-         }
-         else
-         {
-             // Posiziona bene l'item nel nuovo slot
-             transform.localPosition = Vector3.zero;
-         }*/
-
-        //non funzionava...
-        //bool isValidParent = transform.parent != canvas.transform && transform.parent.GetComponent<InventorySlot>() ||transform.parent.GetComponent<InventorySlotEquip>() != null;
+        
         var parent = transform.parent;
         //Questo si...
         bool isValidParent = parent != canvas.transform &&
