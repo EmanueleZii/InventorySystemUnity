@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66c026c31c951b0429c242d48f6cd5bb, type: 3}
   m_Name: Pants
   m_EditorClassIdentifier: 
+  id: 6
   itemName: Pants
   icon: {fileID: 21300000, guid: b8fb302c5768e334ca82005f50e58121, type: 3}

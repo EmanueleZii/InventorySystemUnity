@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33631d9c47bf27b4dbeba68b47408680, type: 3}
   m_Name: meat
   m_EditorClassIdentifier: 
-  itemName: 
-  icon: {fileID: 0}
-  nomeFood: 
+  id: 5
+  itemName: meat
+  icon: {fileID: 21300000, guid: 4a39cb4b272639541b7bd5ac0649acf7, type: 3}
+  nomeFood: carbe
   fame: 20

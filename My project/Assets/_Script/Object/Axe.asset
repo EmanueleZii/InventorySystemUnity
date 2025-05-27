@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696208d1b31358548ba47ee1580a6804, type: 3}
   m_Name: Axe
   m_EditorClassIdentifier: 
+  id: 2
   itemName: ascia
   icon: {fileID: 21300000, guid: 172774604c1bee84185a69041576525b, type: 3}
   nomeArma: ascia
